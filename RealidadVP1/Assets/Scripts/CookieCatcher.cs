@@ -3,7 +3,9 @@ using TMPro;
 
 public class CookieCatcher : MonoBehaviour
 {
-    public TMP_Text cookieCounterText; // Asigna el TextMeshPro desde el Inspector
+    public TMP_Text cookieCounterText;
+    public AudioSource crunchSound;
+
     private int cookieCount = 0;
 
     void Update()
@@ -15,11 +17,19 @@ public class CookieCatcher : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Cookie"))
+                GameObject clickedObject = hit.collider.gameObject;
+
+                if (clickedObject != null && clickedObject.CompareTag("Cookie"))
                 {
                     cookieCount += 10;
                     UpdateCounterDisplay();
-                    Destroy(hit.collider.gameObject); 
+
+                    if (crunchSound != null)
+                    {
+                        crunchSound.Play();
+                    }
+
+                    Destroy(clickedObject);
                 }
             }
         }
@@ -27,6 +37,9 @@ public class CookieCatcher : MonoBehaviour
 
     void UpdateCounterDisplay()
     {
-        cookieCounterText.text = " " + cookieCount.ToString();
+        if (cookieCounterText != null)
+        {
+            cookieCounterText.text = " " + cookieCount.ToString();
+        }
     }
 }
