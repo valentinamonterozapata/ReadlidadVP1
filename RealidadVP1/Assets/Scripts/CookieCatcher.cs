@@ -24,6 +24,12 @@ public class CookieCatcher : MonoBehaviour
                     cookieCount += 10;
                     UpdateCounterDisplay();
 
+                    AudioSource cookieAudio = clickedObject.GetComponent<AudioSource>();
+                    if (cookieAudio != null)
+                    {
+                        cookieAudio.Play();
+                    }
+
                     if (crunchSound != null)
                     {
                         crunchSound.Play();
