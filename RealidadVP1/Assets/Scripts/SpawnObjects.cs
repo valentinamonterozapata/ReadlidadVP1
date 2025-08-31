@@ -38,8 +38,20 @@ public class SpawnObjects : MonoBehaviour
 
     private void InstantiateRandomObject()
     {
-        int objectIndex = Random.Range(0, objects.Length);
-        if (objects[objectIndex] == null) return;
+        GameObject selectedObject;
+
+        float chance = Random.Range(0f, 1f);
+        if (chance < 0.8f)
+        {
+            int cookieIndex = Random.Range(0, 2);
+            selectedObject = objects[cookieIndex];
+        }
+        else
+        {
+            selectedObject = objects[2];
+        }
+
+        if (selectedObject == null) return;
 
         Vector3 spawnPos = spawnPoint.position + new Vector3(
             Random.Range(-spawnRadius, spawnRadius),
@@ -47,7 +59,7 @@ public class SpawnObjects : MonoBehaviour
             Random.Range(-spawnRadius, spawnRadius)
         );
 
-        GameObject obj = Instantiate(objects[objectIndex], spawnPos, Quaternion.identity);
+        GameObject obj = Instantiate(selectedObject, spawnPos, Quaternion.identity);
         if (obj == null) return;
 
         Rigidbody rb = obj.GetComponent<Rigidbody>();
@@ -66,4 +78,5 @@ public class SpawnObjects : MonoBehaviour
 
         Destroy(obj, 5f);
     }
+
 }

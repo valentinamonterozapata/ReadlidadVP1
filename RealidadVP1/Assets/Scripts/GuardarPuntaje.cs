@@ -34,11 +34,10 @@ public class ScoreSaver : MonoBehaviour
         string playerName = nameInputField.text;
         if (string.IsNullOrEmpty(playerName)) return;
 
-        PlayerPrefs.SetString("LastPlayerName", playerName); // 👈 Guarda el nombre
-        PlayerPrefs.Save(); // 👈 Opcional: fuerza el guardado inmediato
+        PlayerPrefs.SetString("LastPlayerName", playerName);
+        PlayerPrefs.Save();
 
         int currentScore = int.Parse(scoreText.text);
-
         ScoreEntry newEntry = new ScoreEntry { playerName = playerName, score = currentScore };
 
         ScoreList scoreList = new ScoreList();
@@ -49,11 +48,21 @@ public class ScoreSaver : MonoBehaviour
             scoreList = JsonUtility.FromJson<ScoreList>(json);
         }
 
+        // Añadir nuevo puntaje
         scoreList.scores.Add(newEntry);
+
+        // Ordenar y limitar a los 5 mejores
+        scoreList.scores.Sort((a, b) => b.score.CompareTo(a.score));
+        if (scoreList.scores.Count > 5)
+        {
+            scoreList.scores = scoreList.scores.GetRange(0, 5);
+        }
+
         string updatedJson = JsonUtility.ToJson(scoreList, true);
         File.WriteAllText(filePath, updatedJson);
 
         Debug.Log($"Guardado: {playerName} - {currentScore} pts");
     }
+
 
 }

@@ -5,6 +5,7 @@ public class CookieCatcher : MonoBehaviour
 {
     public TMP_Text cookieCounterText;
     public AudioSource crunchSound;
+    public AudioSource boomSound;
 
     private int cookieCount = 0;
 
@@ -19,6 +20,17 @@ public class CookieCatcher : MonoBehaviour
             {
                 GameObject clickedObject = hit.collider.gameObject;
 
+                if (clickedObject.CompareTag("Bomb"))
+                {
+                    RestartGameWithoutTimer();
+                    Destroy(clickedObject);
+                    if (boomSound != null)
+                    {
+                        boomSound.Play();
+                    }
+                    return;
+                }
+
                 if (clickedObject != null && clickedObject.CompareTag("Cookie"))
                 {
                     cookieCount += 10;
@@ -32,6 +44,25 @@ public class CookieCatcher : MonoBehaviour
                     Destroy(clickedObject);
                 }
             }
+        }
+    }
+
+    void RestartGameWithoutTimer()
+    {
+        cookieCount = 0;
+        UpdateCounterDisplay();
+
+        GameObject[] cookies = GameObject.FindGameObjectsWithTag("Cookie");
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("Bomb");
+
+        foreach (GameObject obj in cookies)
+        {
+            Destroy(obj);
+        }
+
+        foreach (GameObject obj in bombs)
+        {
+            Destroy(obj);
         }
     }
 

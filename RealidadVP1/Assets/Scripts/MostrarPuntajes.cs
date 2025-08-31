@@ -40,12 +40,16 @@ public class ScoreDisplay : MonoBehaviour
 
     string FormatScores(List<ScoreEntry> scores)
     {
-        scores.Sort((a, b) => b.score.CompareTo(a.score)); // Orden descendente
+        scores.Sort((a, b) => b.score.CompareTo(a.score));
+        int maxToShow = Mathf.Min(5, scores.Count);
         string result = "";
-        for (int i = 0; i < scores.Count; i++)
+
+        for (int i = 0; i < maxToShow; i++)
         {
             result += $"{i + 1}. {scores[i].playerName} - {scores[i].score} pts\n";
         }
+
         return result;
     }
+
 }

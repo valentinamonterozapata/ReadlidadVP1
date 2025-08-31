@@ -6,11 +6,10 @@ public class TimerController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public GameObject gameOverPanel;
-    //public TextMeshProUGUI scoreText; // Asume que ya tienes los puntajes listos
     public float timeRemaining = 60f;
     private bool timerIsRunning = false;
     public GameObject showScoresButton;
-    public GameObject nameInputFieldPanel; // 👈 El objeto que contiene el input field
+    public GameObject nameInputFieldPanel;
 
     void Start()
     {
@@ -47,17 +46,10 @@ public class TimerController : MonoBehaviour
 
     void OnTimerEnd()
     {
-        Time.timeScale = 0f; // Pausa la escena
+        Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
-        showScoresButton.SetActive(true); // 👈 Activa el botón
+        showScoresButton.SetActive(true);
         nameInputFieldPanel.SetActive(true);
-        //scoreText.text = GetFormattedScores(); // Simula o conecta con tu sistema de puntajes
         Debug.Log("¡Tiempo terminado!");
     }
-
-    //string GetFormattedScores()
-    //{
-    //    //// Aquí puedes conectar con tu sistema real de puntajes
-    //    //return "1. Alex - 120 pts\n2. Sam - 95 pts\n3. Luna - 80 pts";
-    //}
 }
