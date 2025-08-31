@@ -48,10 +48,8 @@ public class ScoreSaver : MonoBehaviour
             scoreList = JsonUtility.FromJson<ScoreList>(json);
         }
 
-        // Añadir nuevo puntaje
         scoreList.scores.Add(newEntry);
 
-        // Ordenar y limitar a los 5 mejores
         scoreList.scores.Sort((a, b) => b.score.CompareTo(a.score));
         if (scoreList.scores.Count > 5)
         {
