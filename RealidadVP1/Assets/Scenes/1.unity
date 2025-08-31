@@ -2412,7 +2412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 1465247426}
   gameOverPanel: {fileID: 176417024}
-  timeRemaining: 10
+  timeRemaining: 45
   showScoresButton: {fileID: 1344438835}
   nameInputFieldPanel: {fileID: 101483887}
 --- !u!114 &1465247426
